@@ -8,6 +8,8 @@ use Nette\Application\UI\Form;
 use App\Model;
 use Tracy\Debugger;
 
+use App\Component\biletoApi;
+
 
 class HomepagePresenter extends BasePresenter
 {
@@ -26,6 +28,8 @@ class HomepagePresenter extends BasePresenter
 		// get the response from the Locations API and store it in a string
 		$output = file_get_contents($findURL);*/
 
+		$this->testBiletoApi();
+		
 		Debuger:dump($results);
 	}
 
@@ -60,6 +64,12 @@ class HomepagePresenter extends BasePresenter
 
 		$form->onSuccess[] = array($this, 'searchFormSuccess');
 		return $form;
+
+
+		
+		
+		
+		
 	}
 
 	public function searchFormSuccess($form, $values)
@@ -70,5 +80,27 @@ class HomepagePresenter extends BasePresenter
 		$data['time'] = isset($values['time'])? $values['time'] : '';
 		//Debugger::dump($data);
 		$this->redirect('this', ['results' => array($data)]);
+	}
+	
+	
+	/*
+	 * jenom test
+	 */
+	public function testBiletoApi(){
+		$biletoApi = new biletoApi();
+		
+		$connections = $biletoApi->getConnections();
+		dump($connections);
+		
+		$stops = $biletoApi->getStops();
+		dump($stops);
+		
+		$prices = $biletoApi->getPrices();
+		dump($prices);
+		
+		die('<br>test');
+		
+		
+		
 	}
 }

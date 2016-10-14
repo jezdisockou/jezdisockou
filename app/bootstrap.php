@@ -7,6 +7,10 @@ $configurator = new Nette\Configurator;
 //$configurator->setDebugMode('23.75.345.200'); // enable for your remote IP
 $configurator->enableDebugger(__DIR__ . '/../log');
 
+Tracy\Debugger::$maxDepth = 10; // default: 3
+Tracy\Debugger::$maxLen = 10000;
+
+
 $configurator->setTimeZone('Europe/Prague');
 $configurator->setTempDirectory(__DIR__ . '/../temp');
 
