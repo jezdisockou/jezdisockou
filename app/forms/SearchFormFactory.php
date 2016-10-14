@@ -11,6 +11,7 @@ namespace App\Forms;
 use Nette;
 use Nette\Application\UI\Form;
 use Nette\Security\User;
+use Tracy\Debugger;
 
 
 class SearchFormFactory
@@ -23,7 +24,6 @@ class SearchFormFactory
     public function __construct(FormFactory $factory)
     {
         $this->factory = $factory;
-
     }
 
 
@@ -39,22 +39,19 @@ class SearchFormFactory
         $form->addText('destination', 'Kam:')
             ->setRequired('Kam chcete jet?');
 
-        $form->addPassword('password', 'Password:')
-            ->setRequired('Please enter your password.');
+        $form->addText('date', 'Datum')
+            ->setType('date');
 
-        $form->addCheckbox('remember', 'Keep me signed in');
+        $form->addText('time', 'Čas')
+            ->setType('time');
 
-        $form->addSubmit('send', 'Sign in');
+        $form->addSubmit('send', 'Vyhledat');
 
-        $form->onSuccess[] = function (Form $form, $values) use ($onSuccess) {
-            try {
-                $this->user->setExpiration($values->remember ? '14 days' : '20 minutes');
-                $this->user->login($values->username, $values->password);
-            } catch (Nette\Security\AuthenticationException $e) {
-                $form->addError('The username or password you entered is incorrect.');
-                return;
-            }
-            $onSuccess();
+        $form->onSuccess[] = function (Form $form, $values) use ($onSuccess){
+Debugger::dump($values);
+
+
         };
         return $form;
     }
+}
