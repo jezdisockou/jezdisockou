@@ -23,6 +23,8 @@ services:
 	- App\Forms\SignInFormFactory
 	- App\Forms\SignUpFormFactory
 	- App\Forms\SearchFormFactory
+	- App\Model\GoogleMapsModel
+	- App\Model\BingMapsModel
 	router: App\RouterFactory::createRouter
 	biletoApi: App\Component\BiletoApi
 	cacheStorage:

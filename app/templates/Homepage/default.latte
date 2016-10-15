@@ -1,9 +1,63 @@
 {block content}
 
+
 	{control search}
+	<br><hr><br>
+
+	{if $results}
+		{if $nemamNic}
+			Na této trase jsme nenašli ani rikšu!
+		{else} {* Něco jsme našli *}
+		<div id='myMap' style='width: 80vw; height: 80vh;'></div>
+		<script type='text/javascript'>
+			var colors = [];
+			colors[1]= 0;
+			colors[2]= 230;
+			colors[3]= 0;
+			colors[4]= 250;
+			colors[5]= 180;
+			colors[6]= 0;
+			colors[7]= 0;
+			colors[8]= 0;
+			colors[9]= 220;
+
+			function loadMapScenario() {
+				var map = new Microsoft.Maps.Map(document.getElementById('myMap'), {
+					credentials: 'Aib1VkqsAtlReCj8X5T5QyO2paDb5KI28lTsj6Mht_nWWYBwKBQBnPaoAiPsU5g0',
+				});
+
+				{foreach $data as $trasa}
+
+					var locs{$iterator->counter} = [
+					{foreach $trasa['route'] as $point}
+						new Microsoft.Maps.Location({$point[0]}, {$point[1]}) {if !$iterator->last},{/if}
+					{/foreach}
+					];
+					var route{$iterator->counter} = new Microsoft.Maps.Polyline(locs{$iterator->counter},{ strokeColor:new Microsoft.Maps.Color(200, colors[{$iterator->counter*3-2}], colors[{$iterator->counter*3-1}], colors[{$iterator->counter*3}]), strokeThickness:5});
+
+				map.entities.push(route{$iterator->counter});
+				{/foreach}
+
+				/*	Microsoft.Maps.loadModule('Microsoft.Maps.DrawingTools', function () {
+						var tools = new Microsoft.Maps.DrawingTools(map);
+						tools.showDrawingManager(function (manager) {
+							manager.setPrimitives([route]),
+							manager.setPrimitives([bingCarRoute]);
+						});
+					});*/
+				var bestview = Microsoft.Maps.LocationRect.fromLocations(locs1);
+
+
+				map.setView({ bounds:bestview });
+				//});
+
+			}
+
+		</script>
+		{/if}
+	{/if}
 
 {/block}
 
-{block scripts}
 
-{/block}
+
