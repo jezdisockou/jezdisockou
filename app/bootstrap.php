@@ -1,5 +1,6 @@
 <?php
-
+//phpinfo();
+//die('<br>sg');
 require __DIR__ . '/../vendor/autoload.php';
 
 $configurator = new Nette\Configurator;

@@ -8,7 +8,7 @@ use Nette\Application\UI\Form;
 use App\Model;
 use Tracy\Debugger;
 
-use App\Component\biletoApi;
+use App\Component\BiletoApi;
 
 
 class HomepagePresenter extends BasePresenter
@@ -17,6 +17,11 @@ class HomepagePresenter extends BasePresenter
 
 	/** @var Forms\SearchFormFactory @inject */
 	public $searchFormFactory;
+	
+	/** @var  BiletoApi @inject */
+    public $biletoApi;
+
+
 
 	public function renderDefault($results = array())
 	{
@@ -87,19 +92,10 @@ class HomepagePresenter extends BasePresenter
 	 * jenom test
 	 */
 	public function testBiletoApi(){
-		$biletoApi = new biletoApi();
 		
-		$connections = $biletoApi->getConnections();
-		dump($connections);
-		
-		$stops = $biletoApi->getStops();
-		dump($stops);
-		
-		$prices = $biletoApi->getPrices();
-		dump($prices);
-		
-		$return = $biletoApi->getReturn();
-		
+		$return = $this->biletoApi->getReturn(1,2,3);
+		echo "\n<br>MOCNY TO RETURN";
+		dump($return);
 		die('<br>test');
 		
 		
