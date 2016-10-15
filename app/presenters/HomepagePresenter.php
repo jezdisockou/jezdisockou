@@ -98,6 +98,8 @@ class HomepagePresenter extends BasePresenter
 		$prices = $biletoApi->getPrices();
 		dump($prices);
 		
+		$return = $biletoApi->getReturn();
+		
 		die('<br>test');
 		
 		
